@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-notify@0.5.5/dist/simple-notify.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/simple-notify@0.5.5/dist/simple-notify.min.js"></script>
+    <script src="js/script.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link rel="stylesheet" href="css/estilo.css">
+    
+</head>
+
+<body>
+    <header>
+       <div>
+        <h1>Carrinho de Compras</h1>
+
+    <% if(autenticado.autenticado != null){
+        if(login == 1){%>
+       <script>
+           notify("Login efetuado com sucesso", 
+           "Olá <%= autenticado.autenticado %>", "success", "center")                        
+       </script>
+       <% } 
+       let arquivo={"imagem":"imagem/img-perfil.png"} ;
+       if(autenticado.img_perfil_pasta != null){ 
+            arquivo.imagem = autenticado.img_perfil_pasta;
+       }else if(autenticado.img_perfil_banco != null){ 
+            arquivo.imagem = autenticado.img_perfil_banco;
+       } 
+   %>
+   <span>Olá <%= autenticado.autenticado %>!</span><br>
+    <span><a href="/perfil"><img class="icone-perfil" src="<%= arquivo.imagem %>" </a></span>
+    <p><a href="/sair">sair</a></p>
+    
+    <% }else{ %>
+        <span>Olá visitante!</span>
+        <p><a href="/login">Login</a></p>
+        <p><a href="/cadastro">Cadastro</a></p>
+        <p><a href="/adm">Administrador</a></p>
+        <% } %>
+    </div>
+    <div>
+        <a href="/listar-carrinho">
+        <figure class="carrinho">
+            <img  src="imagem/carrinho.png" alt="">
+            <%
+            if(carrinho){
+                var itensCarrinho =  carrinho.length 
+            }else{
+                var itensCarrinho = 0; 
+            }
+            %>
+            <figcaption><%= itensCarrinho   %></figcaption>
+        </figure>
+    </a>
+    </div>
+
+    </header>   
+    <section class='galeria'>
+        <%
+
+            if(listaHq){
+                listaHq.forEach(function(item){
+
+                     
+                    %>
+                    <div class="card">
+                        <figure>
+                            <img src="<%= item.imagem_hq %>" alt="">
+                        </figure>
+                        <div class="detalhes">
+                            <h3><%= item.nome_hq %></h3>
+                            <p><%= item.descr_hq %></p>
+                            <h2>R$ <%= item.preco_hq.toFixed(2) %></h2>
+                        </div>
+                        <div class="botoes">
+
+                            <a href="/favoritar?id=<%= item.id_hq %>&sit=<%= item.favorito %>"><i class="fas fa-light fa-heart <%= item.favorito %>"></i></a>
+                            <a class="comprar" href="/addItem?id=<%= item.id_hq %>&preco=<%= item.preco_hq.toFixed(2) %>">comprar</a>
+                        </div>
+                    </div>
+                    <%
+                });
+            }
+        %>
+    </section>
+
+</body>
+
