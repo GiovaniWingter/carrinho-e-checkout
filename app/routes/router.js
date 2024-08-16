@@ -8,12 +8,22 @@ const {
   verificarUsuAutorizado,
 } = require("../models/autenticador_middleware");
 
-const {usuarioController} = require("../controllers/usuarioController");
-const {carrinhoController} = require("../controllers/carrinhoController");
-const {hqController} = require("../controllers/hqController");
+const { usuarioController } = require("../controllers/usuarioController");
+const { carrinhoController } = require("../controllers/carrinhoController");
+const { hqController } = require("../controllers/hqController");
 
 const uploadFile = require("../util/uploader")("./app/public/imagem/perfil/");
 // const uploadFile = require("../util/uploader")();
+
+
+// SDK do Mercado Pago
+const { MercadoPagoConfig, Preference } = require('mercadopago');
+// Adicione as credenciais
+const client = new MercadoPagoConfig(
+  {
+    accessToken: process.env.accessToken
+  });
+
 
 router.get("/addItem", function (req, res) {
   carrinhoController.addItem(req, res);
@@ -24,7 +34,7 @@ router.get("/removeItem", function (req, res) {
 });
 
 router.get("/listar-carrinho", function (req, res) {
-  carrinhoController.listarcarrinho(req,res);
+  carrinhoController.listarcarrinho(req, res);
 });
 
 router.get(
@@ -92,12 +102,45 @@ router.get(
   }
 );
 
-router.get("/favoritar", verificarUsuAutenticado,function (req, res) {
-    hqController.favoritar(req, res);
-  }
+router.get("/favoritar", verificarUsuAutenticado, function (req, res) {
+  hqController.favoritar(req, res);
+}
 );
 
 
+/* ---------------------------------------------------------------------
+
+router.post("/create-preference", function (req, res) {
+
+    const preference = new Preference(client);
+
+    preference.create({
+        body: {
+            items: [
+                {
+                    title: req.body.description,
+                    unit_price:Number(req.body.price),
+                    quantity: Number(req.body.quantity),
+                }
+            ],
+            back_urls: {
+                "success": "http://localhost:8080/feedback",
+                "failure": "http://localhost:8080/feedback",
+                "pending": "http://localhost:8080/feedback"
+            },
+            auto_return: "approved",
+        }
+    })
+        .then((value)=>{
+            res.json(value)
+        })
+        .catch(console.log)
+
+
+
+});
+
+-----------------------------------------------------------------------*/
 
 
 
