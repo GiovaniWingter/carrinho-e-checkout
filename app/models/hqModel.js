@@ -6,8 +6,8 @@ const hqModel = {
         try {
             const [resultados] = await pool.query("SELECT h.id_hq, h.nome_hq, h.descr_hq, h.imagem_hq, " +
                 " h.preco_hq, h.status_hq, IF(f.hq_id_hq > 0, 'favorito', 'favoritar') as favorito  " +
-                " FROM autenticacao.hq h " +
-                " left join autenticacao.favorito f " +
+                " FROM hq h " +
+                " left join favorito f " +
                 " on ((h.id_hq = f.hq_id_hq and f.usuario_id_usuario = ?) and f.status_favorito =1)", [id]);
                 return resultados;
         } catch (error) {

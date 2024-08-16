@@ -13,9 +13,7 @@ const carrinhoController = {
             let preco = req.query.preco;
             carrinho.addItem(id, 1, preco);
             carrinho.atualizarCarrinho(req);
-            let url = req.rawHeaders[25];
-            let urlChamadora = url.replace("http://localhost:3000", "");
-            res.redirect(urlChamadora);
+            res.redirect("/");
         } catch (e) {
             console.log(e);
             res.render("pages/cadastro", {
@@ -32,9 +30,7 @@ const carrinhoController = {
             let qtde = req.query.qtde;
             carrinho.removeItem(id, qtde);
             carrinho.atualizarCarrinho(req);           
-            let url = req.rawHeaders[25];
-            let urlChamadora = url.replace("http://localhost:3000", "");
-            res.redirect(urlChamadora);
+            res.redirect("/");
         } catch (e) {
             console.log(e);
             res.render("pages/login", {
