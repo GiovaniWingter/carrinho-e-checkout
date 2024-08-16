@@ -108,7 +108,12 @@ router.get("/favoritar", verificarUsuAutenticado, function (req, res) {
 );
 
 
-/* ---------------------------------------------------------------------
+/* --------------------------------------------------------------------- */
+
+
+router.get("/exemplo", function(req, res){
+  res.render("pages/exemplo")
+})
 
 router.post("/create-preference", function (req, res) {
 
@@ -140,7 +145,7 @@ router.post("/create-preference", function (req, res) {
 
 });
 
------------------------------------------------------------------------*/
+/* -----------------------------------------------------------------------*/
 
 
 
