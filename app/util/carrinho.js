@@ -22,7 +22,6 @@ const carrinho = {
             let indice = carrinho.itensCarrinho.findIndex((element) => element.codproduto == codItem);
             if (indice == -1) {
                 hq = await hqModel.findID(codItem);
-                console.log(hq[0].nome_hq);
                 carrinho.itensCarrinho.push(
                     {
                         "codproduto": codItem,
@@ -35,7 +34,6 @@ const carrinho = {
                 carrinho.itensCarrinho[indice].qtde += qtde;
             }
         }
-        console.log(carrinho.itensCarrinho);
     },
 
     removeItem: (codItem, qtde) => {

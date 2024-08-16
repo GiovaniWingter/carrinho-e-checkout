@@ -44,7 +44,6 @@ const carrinhoController = {
 
     listarcarrinho: (req, res) => {
         try {
-            console.log("teste")
             carrinho.atualizarCarrinho(req);
             req.session.autenticado.login = req.query.login;
             res.render("pages/listar-carrinho", {
