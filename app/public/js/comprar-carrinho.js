@@ -13,44 +13,23 @@ document.addEventListener("DOMContentLoaded", function (e) {
 
     const items = document.querySelectorAll(".products .item");
 
-  // Array para armazenar os dados extraídos
-  const extractedData = [];
+    // Array para armazenar os dados extraídos
+    const extractedData = [];
 
-  // Itera sobre cada item para extrair os dados
-  items.forEach(item => {
-    const   price = parseFloat(item.querySelector("#summary-price").innerText.trim().replace('R$', '').trim());
-    const unit_price = Number(price.toFixed(2));
-    const nameElement = item.querySelector(".item-name");
-    const description = nameElement.childNodes[0].nodeValue.trim();
-    const quantity = Number(nameElement.querySelector("#summary-quantity").innerText.trim());
-    const currency_id = "BRL";
+    // Itera sobre cada item para extrair os dados
+    items.forEach(item => {
+      const price = parseFloat(item.querySelector("#summary-price").innerText.trim().replace('R$', '').trim());
+      const unit_price = Number(price.toFixed(2));
+      const nameElement = item.querySelector(".item-name");
+      const description = nameElement.childNodes[0].nodeValue.trim();
+      const quantity = Number(nameElement.querySelector("#summary-quantity").innerText.trim());
+      const currency_id = "BRL";
 
-    extractedData.push({ unit_price, description, quantity, currency_id});
-  });
+      extractedData.push({ unit_price, description, quantity, currency_id });
+    });
 
-  // Exibe os dados extraídos no console
-  
-  // const  itens = [
-  //     {
-  //       description: 'Dummy description',
-  //       quantity: 1,
-  //       currency_id: 'BRL',
-  //       unit_price: 10,
-  //     },
-  //     {
-  //       description: 'Dummy description',
-  //       quantity: 1,
-  //       currency_id: 'BRL',
-  //       unit_price: 10,
-  //     },
-  //   ]
-    // console.log("itens");
-    // console.log(itens);
-    console.log("extractedData");
-    console.log(extractedData);
-    console.log("fim");
-    
-    orderData = {items:extractedData}
+
+    orderData = { items: extractedData }
 
     fetch("/create-preference", {
       method: "POST",
