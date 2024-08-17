@@ -119,15 +119,11 @@ router.post("/create-preference", function (req, res) {
 
     const preference = new Preference(client);
 
+console.log( req.body.items);
+
     preference.create({
         body: {
-            items: [
-                {
-                    title: req.body.description,
-                    unit_price:Number(req.body.price),
-                    quantity: Number(req.body.quantity),
-                }
-            ],
+            items: req.body.items,
             back_urls: {
                 "success": "http://localhost:8080/feedback",
                 "failure": "http://localhost:8080/feedback",
