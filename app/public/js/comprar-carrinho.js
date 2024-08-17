@@ -20,7 +20,6 @@ document.addEventListener("DOMContentLoaded", function (e) {
     items.forEach(item => {
       const price = parseFloat(item.querySelector("#summary-price").innerText.trim().replace('R$', '').trim());
       const unit_price = Number(price.toFixed(2));
-      const nameElement = item.querySelector(".item-name");
       const description = nameElement.childNodes[0].nodeValue.trim();
       const quantity = Number(nameElement.querySelector("#summary-quantity").innerText.trim());
       const currency_id = "BRL";
