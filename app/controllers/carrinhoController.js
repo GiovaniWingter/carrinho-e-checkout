@@ -13,7 +13,7 @@ const carrinhoController = {
             let preco = req.query.preco;
             carrinho.addItem(id, 1, preco);
             carrinho.atualizarCarrinho(req);
-            res.redirect("/");
+            res.redirect(req.get('Referer').split("/")[3]); 
         } catch (e) {
             console.log(e);
             res.render("pages/cadastro", {
@@ -30,7 +30,7 @@ const carrinhoController = {
             let qtde = req.query.qtde;
             carrinho.removeItem(id, qtde);
             carrinho.atualizarCarrinho(req);           
-            res.redirect("/");
+            res.redirect(req.get('Referer').split("/")[3]); 
         } catch (e) {
             console.log(e);
             res.render("pages/login", {
