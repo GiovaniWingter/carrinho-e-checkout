@@ -4,6 +4,7 @@ const { body, validationResult } = require("express-validator");
 const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 const https = require('https');
 
+const { PedidoModel } = require("../models/pedidoModel");
 
 const carrinhoController = {
 
@@ -13,8 +14,8 @@ const carrinhoController = {
             let preco = req.query.preco;
             carrinho.addItem(id, 1, preco);
             carrinho.atualizarCarrinho(req);
-            let caminho = req.get('Referer').split("/")[3] == ""? "/" : "/"+req.get('Referer').split("/")[3];
-            res.redirect(caminho); 
+            let caminho = req.get('Referer').split("/")[3] == "" ? "/" : "/" + req.get('Referer').split("/")[3];
+            res.redirect(caminho);
         } catch (e) {
             console.log(e);
             res.render("pages/cadastro", {
@@ -30,9 +31,9 @@ const carrinhoController = {
             let id = req.query.id;
             let qtde = req.query.qtde;
             carrinho.removeItem(id, qtde);
-            carrinho.atualizarCarrinho(req);           
-            let caminho = req.get('Referer').split("/")[3] == ""? "/" : "/"+req.get('Referer').split("/")[3];
-            res.redirect(caminho); 
+            carrinho.atualizarCarrinho(req);
+            let caminho = req.get('Referer').split("/")[3] == "" ? "/" : "/" + req.get('Referer').split("/")[3];
+            res.redirect(caminho);
         } catch (e) {
             console.log(e);
             res.render("pages/login", {
@@ -63,7 +64,55 @@ const carrinhoController = {
             })
         }
     },
+
+
+    gravarPedido: (req, res) => {
+
+        try {
+
+            const carrinho = req.session.carrinho;
+            
+            const CamposJsonPedido = {
+                data: moment().format("YYYY/MM/DD HH:MM:SS"),
+                usuario_id_usuario: req.session.autenticado.id,
+                status_pedido : 1,
+                status_pagamento: req.query.status,
+                id_pagamento: req.query.payment_id
+            }
+            
+            PedidoModel.createPedido(CamposJsonPedido);
+
+            carrinho.forEach(element => {
+                
+                CamposJsonPedido = {
+                    pedido_id_pedido: "id",
+                    hq_id_hq:"id",
+                    quantidade: "qtde"
+                }
+
+                PedidoModel.createItemPedido(CamposJsonItem);
+            });
+
+
+
+            res.render("pages/index", {
+                autenticado: req.session.autenticado,
+                carrinho: req.session.carrinho,
+                listaErros: null,
+            });
+        } catch (e) {
+            console.log(e);
+            res.render("pages/listar-carrinho", {
+                autenticado: req.session.autenticado,
+                carrinho: null,
+                listaErros: null,
+                dadosNotificacao: { titulo: "Falha ao Listar Itens !", mensagem: "Erro interno no servidor!", tipo: "error" }
+            })
+        }
+
+
+    }
 }
 
 
-module.exports = {carrinhoController}
+module.exports = { carrinhoController }

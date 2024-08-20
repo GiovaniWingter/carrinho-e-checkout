@@ -111,31 +111,31 @@ router.get("/favoritar", verificarUsuAutenticado, function (req, res) {
 /* --------------------------------------------------------------------- */
 
 
-router.get("/exemplo", function(req, res){
+router.get("/exemplo", function (req, res) {
   res.render("pages/exemplo")
 })
 
 router.post("/create-preference", function (req, res) {
 
-    const preference = new Preference(client);
+  const preference = new Preference(client);
 
-console.log( req.body.items);
+  console.log(req.body.items);
 
-    preference.create({
-        body: {
-            items: req.body.items,
-            back_urls: {
-                "success": process.env.URL_BASE+"/mpSucess",
-                "failure": process.env.URL_BASE+"/mpFailure",
-                "pending": process.env.URL_BASE+"/mpPending"
-            },
-            auto_return: "approved",
-        }
+  preference.create({
+    body: {
+      items: req.body.items,
+      back_urls: {
+        "success": process.env.URL_BASE + "/feedback",
+        "failure": process.env.URL_BASE + "/feedback",
+        "pending": process.env.URL_BASE + "/feedback"
+      },
+      auto_return: "approved",
+    }
+  })
+    .then((value) => {
+      res.json(value)
     })
-        .then((value)=>{
-            res.json(value)
-        })
-        .catch(console.log)
+    .catch(console.log)
 
 
 
@@ -144,18 +144,21 @@ console.log( req.body.items);
 /* -----------------------------------------------------------------------*/
 
 
-router.get("/mpSucess", function(req, res){
-  console.log("sucess")
+router.get("/feedback", function (req, res) {
   console.log(req.query)
+  console.log(req.session.carrinho);
+
+  console.log(req.query.payment_id);
+  console.log(req.query.status);
+
+  // atualizar a tabela de pedido
+  //  payment_id: '85762850236',
+  //   status: 'approved',
+
+
+
 })
-router.get("/mpFailure", function(req, res){
-  console.log("Failure")
-  console.log(req.query)
-})
-router.get("/mpPending", function(req, res){
-  console.log("Pending")
-  console.log(req.query)
-})
+
 
 module.exports = router;
 

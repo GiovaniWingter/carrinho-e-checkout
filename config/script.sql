@@ -120,7 +120,7 @@ CREATE TABLE `pedido` (
   `data` datetime DEFAULT NULL,
   `usuario_id_usuario` int(11) NOT NULL,
   `status_pedido` int(11) DEFAULT '1',
-  `status_pagamento` int(11) DEFAULT NULL,
+  `status_pagamento` varchar(20) DEFAULT NULL,
   `id_pagamento` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_pedido`),
   KEY `fk_pedido_usuario1_idx` (`usuario_id_usuario`),
