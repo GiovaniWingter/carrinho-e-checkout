@@ -11,8 +11,6 @@ const { carrinho } = require("../util/carrinho");
 
 const hqController = {
 
-
-
     listar: async (req, res) => {
         req.session.autenticado.login = req.query.login;
         results = await hqModel.findAll(req.session.autenticado.id);
@@ -21,7 +19,7 @@ const hqController = {
             autenticado: req.session.autenticado,
             login: req.session.logado,
             listaHq: results,
-            carrinho: req.session.carrinho,
+            carrinho: req.session.carrinho
         });
     },
 

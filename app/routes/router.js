@@ -145,17 +145,8 @@ router.post("/create-preference", function (req, res) {
 
 
 router.get("/feedback", function (req, res) {
-  console.log(req.query)
-  console.log(req.session.carrinho);
 
-  console.log(req.query.payment_id);
-  console.log(req.query.status);
-
-  // atualizar a tabela de pedido
-  //  payment_id: '85762850236',
-  //   status: 'approved',
-
-
+  carrinhoController.gravarPedido(req, res);
 
 })
 

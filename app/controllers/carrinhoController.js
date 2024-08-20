@@ -1,5 +1,6 @@
 const { carrinho } = require("../util/carrinho");
 const { body, validationResult } = require("express-validator");
+const moment = require("moment");
 
 const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 const https = require('https');
@@ -41,8 +42,6 @@ const carrinhoController = {
                 dadosNotificacao: { titulo: "Falha ao logar!", mensagem: "Usuário e/ou senha inválidos!", tipo: "error" }
             })
         }
-
-
     },
 
     listarcarrinho: (req, res) => {
@@ -66,40 +65,36 @@ const carrinhoController = {
     },
 
 
-    gravarPedido: (req, res) => {
+    gravarPedido: async (req, res) => {
 
         try {
 
             const carrinho = req.session.carrinho;
             
             const CamposJsonPedido = {
-                data: moment().format("YYYY/MM/DD HH:MM:SS"),
+                data: moment().format("YYYY-MM-DD HH:mm:ss"),
                 usuario_id_usuario: req.session.autenticado.id,
                 status_pedido : 1,
                 status_pagamento: req.query.status,
                 id_pagamento: req.query.payment_id
             }
             
-            PedidoModel.createPedido(CamposJsonPedido);
+          var create = await PedidoModel.createPedido(CamposJsonPedido);
 
-            carrinho.forEach(element => {
+          console.log(CamposJsonPedido);
+
+            carrinho.forEach(async element => {
                 
-                CamposJsonPedido = {
-                    pedido_id_pedido: "id",
-                    hq_id_hq:"id",
-                    quantidade: "qtde"
+                CamposJsonItemPedido = {
+                    pedido_id_pedido: create.insertId,
+                    hq_id_hq: element.codproduto,
+                    quantidade: element.qtde
                 }
-
-                PedidoModel.createItemPedido(CamposJsonItem);
+                console.log(CamposJsonItemPedido);
+            await PedidoModel.createItemPedido(CamposJsonItemPedido);
             });
-
-
-
-            res.render("pages/index", {
-                autenticado: req.session.autenticado,
-                carrinho: req.session.carrinho,
-                listaErros: null,
-            });
+            req.session.carrinho = [];
+            res.redirect("/");
         } catch (e) {
             console.log(e);
             res.render("pages/listar-carrinho", {
@@ -109,8 +104,6 @@ const carrinhoController = {
                 dadosNotificacao: { titulo: "Falha ao Listar Itens !", mensagem: "Erro interno no servidor!", tipo: "error" }
             })
         }
-
-
     }
 }
 
