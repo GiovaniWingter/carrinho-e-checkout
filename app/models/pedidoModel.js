@@ -1,10 +1,10 @@
 var pool = require("../../config/pool_conexoes");
 
-    const tipoUsuarioModel = {
+    const PedidoModel = {
         findAll: async () => {
             try {
                 const [resultados] = await pool.query(
-                    'SELECT * FROM tipo_usuario where status_tipo_usuario = 1 '
+                    'SELECT * FROM pedido'
                 )
                 return resultados;
             } catch (error) {
@@ -15,7 +15,7 @@ var pool = require("../../config/pool_conexoes");
         findId: async (id) => {
             try {
                 const [resultados] = await pool.query(
-                    "select * from tipo_usuario where id_tipo_usuario = ? and  status_tipo_usuario = 1",
+                    "select * from pedido where id_pedido = ?",
                     [id]
                 )
                 return resultados;
@@ -23,10 +23,11 @@ var pool = require("../../config/pool_conexoes");
                 return error;
             }
         },
-        create: async (camposJson) => {
+
+        createPedido: async (camposJson) => {
             try {
                 const [resultados] = await pool.query(
-                    "insert into tipo_usuario set ?",
+                    "insert into pedido set ?",
                     [camposJson]
                 )
                 return resultados;
@@ -34,21 +35,35 @@ var pool = require("../../config/pool_conexoes");
                 return error;
             }
         },
-        update: async (camposJson) => {
+        
+        createItemPedido: async (camposJson) => {
             try {
                 const [resultados] = await pool.query(
-                    "UPDATE tipo_usuario SET tipo_usuario = ?, descricao_usuario = ? WHERE id_tipo_usuario = ?",
-                    [camposJson.tipo_usuario, camposJson.descricao_usuario, camposJson.id_tipo_usuario],
+                    "insert into item_pedido set ?",
+                    [camposJson]
                 )
                 return resultados;
             } catch (error) {
                 return error;
             }
         },
+
+        update: async (camposJson, id) => {
+            try {
+                const [resultados] = await pool.query(
+                    "UPDATE pedido SET  ? WHERE id_pedido = ?",
+                    [camposJson, id],
+                )
+                return resultados;
+            } catch (error) {
+                return error;
+            }
+        },
+        
         delete: async (id) => {
             try {
                 const [resultados] = await pool.query(
-                    "UPDATE tipo_usuario SET status_tipo_usuario = 0 WHERE id_tipo_usuario = ?", [id]
+                    "UPDATE pedido SET status_pedido = 0 WHERE id_pedido = ?", [id]
                 )
                 return resultados;
             } catch (error) {
@@ -57,4 +72,4 @@ var pool = require("../../config/pool_conexoes");
         }
     };
 
-module.exports = {tipoUsuarioModel}
+module.exports = {PedidoModel}

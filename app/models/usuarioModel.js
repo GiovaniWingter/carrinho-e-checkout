@@ -100,4 +100,4 @@ var pool = require("../../config/pool_conexoes");
         },
     };
 
-    module.exports = usuarioModel
+    module.exports = {usuarioModel}

@@ -1,10 +1,8 @@
-CREATE DATABASE  IF NOT EXISTS `autenticacao` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `autenticacao`;
 -- MySQL dump 10.13  Distrib 8.0.31, for Win64 (x86_64)
 --
--- Host: localhost    Database: autenticacao
+-- Host: bv5m4vpzhoan9qe4nb1d-mysql.services.clever-cloud.com    Database: bv5m4vpzhoan9qe4nb1d
 -- ------------------------------------------------------
--- Server version	8.0.31
+-- Server version	8.0.15-5
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -16,6 +14,14 @@ USE `autenticacao`;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+SET @MYSQLDUMP_TEMP_LOG_BIN = @@SESSION.SQL_LOG_BIN;
+SET @@SESSION.SQL_LOG_BIN= 0;
+
+--
+-- GTID state at the beginning of the backup 
+--
+
+SET @@GLOBAL.GTID_PURGED=/*!80000 '+'*/ 'f41d366d-91e5-11e9-8525-cecd028ee826:1-141602355';
 
 --
 -- Table structure for table `favorito`
@@ -25,10 +31,10 @@ DROP TABLE IF EXISTS `favorito`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `favorito` (
-  `hq_id_hq` int NOT NULL,
-  `usuario_id_usuario` int NOT NULL,
+  `hq_id_hq` int(11) NOT NULL,
+  `usuario_id_usuario` int(11) NOT NULL,
   `dt_inclusao_favorito` date DEFAULT NULL,
-  `status_favorito` int DEFAULT NULL,
+  `status_favorito` int(11) DEFAULT NULL,
   PRIMARY KEY (`hq_id_hq`,`usuario_id_usuario`),
   KEY `fk_hq_has_usuario_usuario1_idx` (`usuario_id_usuario`),
   KEY `fk_hq_has_usuario_hq1_idx` (`hq_id_hq`),
@@ -43,6 +49,7 @@ CREATE TABLE `favorito` (
 
 LOCK TABLES `favorito` WRITE;
 /*!40000 ALTER TABLE `favorito` DISABLE KEYS */;
+INSERT INTO `favorito` VALUES (1,1,'2024-08-16',1),(2,1,'2024-08-16',1),(3,1,'2024-08-16',0);
 /*!40000 ALTER TABLE `favorito` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -54,12 +61,12 @@ DROP TABLE IF EXISTS `hq`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `hq` (
-  `id_hq` int NOT NULL AUTO_INCREMENT,
+  `id_hq` int(11) NOT NULL AUTO_INCREMENT,
   `nome_hq` varchar(85) DEFAULT NULL,
   `descr_hq` varchar(255) DEFAULT NULL,
   `imagem_hq` varchar(155) DEFAULT NULL,
   `preco_hq` float DEFAULT NULL,
-  `status_hq` int DEFAULT '1',
+  `status_hq` int(11) DEFAULT '1',
   PRIMARY KEY (`id_hq`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -75,6 +82,62 @@ INSERT INTO `hq` VALUES (1,'O Cavaleiro das Trevas','Batman de Frank Miller','im
 UNLOCK TABLES;
 
 --
+-- Table structure for table `item_pedido`
+--
+
+DROP TABLE IF EXISTS `item_pedido`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `item_pedido` (
+  `pedido_id_pedido` int(11) NOT NULL,
+  `hq_id_hq` int(11) NOT NULL,
+  `quantidade` int(11) NOT NULL,
+  KEY `fk_pedido_has_hq_hq1_idx` (`hq_id_hq`),
+  KEY `fk_pedido_has_hq_pedido1_idx` (`pedido_id_pedido`),
+  CONSTRAINT `fk_pedido_has_hq_hq1` FOREIGN KEY (`hq_id_hq`) REFERENCES `hq` (`id_hq`),
+  CONSTRAINT `fk_pedido_has_hq_pedido1` FOREIGN KEY (`pedido_id_pedido`) REFERENCES `pedido` (`id_pedido`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `item_pedido`
+--
+
+LOCK TABLES `item_pedido` WRITE;
+/*!40000 ALTER TABLE `item_pedido` DISABLE KEYS */;
+/*!40000 ALTER TABLE `item_pedido` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `pedido`
+--
+
+DROP TABLE IF EXISTS `pedido`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `pedido` (
+  `id_pedido` int(11) NOT NULL AUTO_INCREMENT,
+  `data` datetime DEFAULT NULL,
+  `usuario_id_usuario` int(11) NOT NULL,
+  `status_pedido` int(11) DEFAULT '1',
+  `status_pagamento` int(11) DEFAULT NULL,
+  `id_pagamento` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id_pedido`),
+  KEY `fk_pedido_usuario1_idx` (`usuario_id_usuario`),
+  CONSTRAINT `fk_pedido_usuario1` FOREIGN KEY (`usuario_id_usuario`) REFERENCES `usuario` (`id_usuario`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `pedido`
+--
+
+LOCK TABLES `pedido` WRITE;
+/*!40000 ALTER TABLE `pedido` DISABLE KEYS */;
+/*!40000 ALTER TABLE `pedido` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `tipo_usuario`
 --
 
@@ -82,10 +145,10 @@ DROP TABLE IF EXISTS `tipo_usuario`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `tipo_usuario` (
-  `id_tipo_usuario` int NOT NULL AUTO_INCREMENT,
+  `id_tipo_usuario` int(11) NOT NULL AUTO_INCREMENT,
   `tipo_usuario` varchar(25) DEFAULT NULL,
   `descricao_usuario` varchar(155) DEFAULT NULL,
-  `status_tipo_usuario` int DEFAULT '1',
+  `status_tipo_usuario` int(11) DEFAULT '1',
   PRIMARY KEY (`id_tipo_usuario`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -108,7 +171,7 @@ DROP TABLE IF EXISTS `usuario`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `usuario` (
-  `id_usuario` int NOT NULL AUTO_INCREMENT,
+  `id_usuario` int(11) NOT NULL AUTO_INCREMENT,
   `nome_usuario` varchar(45) NOT NULL,
   `user_usuario` varchar(45) NOT NULL,
   `senha_usuario` char(60) NOT NULL,
@@ -119,8 +182,8 @@ CREATE TABLE `usuario` (
   `complemento_usuario` varchar(155) DEFAULT NULL,
   `img_perfil_pasta` varchar(80) DEFAULT NULL,
   `img_perfil_banco` longblob,
-  `tipo_usuario` int NOT NULL DEFAULT '1',
-  `status_usuario` int NOT NULL DEFAULT '1',
+  `tipo_usuario` int(11) NOT NULL DEFAULT '1',
+  `status_usuario` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id_usuario`),
   KEY `fk_usuario_tipo_usuario_idx` (`tipo_usuario`),
   CONSTRAINT `fk_usuario_tipo_usuario` FOREIGN KEY (`tipo_usuario`) REFERENCES `tipo_usuario` (`id_tipo_usuario`)
@@ -133,9 +196,10 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES (1,'Helvética','helvinha','$2a$12$J1piFIoOATeGAlIOPW0HSuo.pWb/tBJabaoyNNMkxwgrLAG70MYFK','helvinh@gmail.com','1234567890123','06386670','13','próx. esquina 2',NULL,NULL,3,1),(2,'Ana Julia','anajulia','$2a$12$PlgVYz2SaOfcKcKt6kqrCevcRMRLZSoIw43cCo8cOF8DNECZ9vgRa','ana@julia.com','112342358923',NULL,NULL,NULL,NULL,NULL,2,1);
+INSERT INTO `usuario` VALUES (1,'Helvética','helvinha','$2a$12$J1piFIoOATeGAlIOPW0HSuo.pWb/tBJabaoyNNMkxwgrLAG70MYFK','helvinh@gmail.com','1234567890123','06386670','13','próx. esquina 2',NULL,NULL,3,1),(2,'Ana Julia','anajulia','$2a$12$PlgVYz2SaOfcKcKt6kqrCevcRMRLZSoIw43cCo8cOF8DNECZ9vgRa','ana@julia.com','112342358923',NULL,NULL,NULL,NULL,NULL,1,1);
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
+SET @@SESSION.SQL_LOG_BIN = @MYSQLDUMP_TEMP_LOG_BIN;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -146,4 +210,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-05-14 16:41:51
+-- Dump completed on 2024-08-20 16:42:44
