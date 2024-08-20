@@ -1,6 +1,6 @@
 
 document.addEventListener("DOMContentLoaded", function (e) {
-  // Aqui vai o seu código
+   
   const mercadopago = new MercadoPago('APP_USR-241135b5-df1a-48b8-bfe3-985304c1e399', {
     locale: 'pt-BR' // The most common are: 'pt-BR', 'es-AR' and 'en-US'
   });
@@ -9,7 +9,6 @@ document.addEventListener("DOMContentLoaded", function (e) {
   document.getElementById("checkout-btn").addEventListener("click", function () {
 
     $('#checkout-btn').attr("disabled", true);
-
 
     const items = document.querySelectorAll(".products .item");
 
@@ -20,6 +19,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
     items.forEach(item => {
       const price = parseFloat(item.querySelector("#summary-price").innerText.trim().replace('R$', '').trim());
       const unit_price = Number(price.toFixed(2));
+      const nameElement = item.querySelector(".item-name");
       const description = nameElement.childNodes[0].nodeValue.trim();
       const quantity = Number(nameElement.querySelector("#summary-quantity").innerText.trim());
       const currency_id = "BRL";
