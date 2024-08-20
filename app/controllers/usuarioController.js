@@ -1,4 +1,4 @@
-const usuario = require("../models/usuarioModel");
+const {usuarioModel} = require("../models/usuarioModel");
 const { body, validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
 var salt = bcrypt.genSaltSync(12);
@@ -23,7 +23,7 @@ const usuarioController = {
         body("nomeusu_usu")
             .isLength({ min: 8, max: 45 }).withMessage("Nome de usuário deve ter de 8 a 45 caracteres!")
             .custom(async value => {
-                const nomeUsu = await usuario.findCampoCustom({ 'user_usuario': value });
+                const nomeUsu = await usuarioModel.findCampoCustom({ 'user_usuario': value });
                 if (nomeUsu > 0) {
                     throw new Error('Nome de usuário em uso!');
                 }
@@ -31,7 +31,7 @@ const usuarioController = {
         body("email_usu")
             .isEmail().withMessage("Digite um e-mail válido!")
             .custom(async value => {
-                const nomeUsu = await usuario.findCampoCustom({ 'email_usuario': value });
+                const nomeUsu = await usuarioModel.findCampoCustom({ 'email_usuario': value });
                 if (nomeUsu > 0) {
                     throw new Error('E-mail em uso!');
                 }
@@ -86,7 +86,7 @@ const usuarioController = {
             return res.render("pages/cadastro", { listaErros: erros, dadosNotificacao: null, valores: req.body })
         }
         try {
-            let create = usuario.create(dadosForm);
+            let create = usuarioModel.create(dadosForm);
             res.render("pages/cadastro", {
                 listaErros: null, dadosNotificacao: {
                     titulo: "Cadastro realizado!", mensagem: "Novo usuário criado com sucesso!", tipo: "success"
@@ -105,7 +105,7 @@ const usuarioController = {
 
     mostrarPerfil: async (req, res) => {
         try {
-            let results = await usuario.findId(req.session.autenticado.id);
+            let results = await usuarioModel.findId(req.session.autenticado.id);
             if (results[0].cep_usuario != null) {
                 const httpsAgent = new https.Agent({
                     rejectUnauthorized: false,
@@ -189,10 +189,10 @@ const usuarioController = {
                 // }
                 // dadosForm.img_perfil_pasta = null; 
             }
-            let resultUpdate = await usuario.update(dadosForm, req.session.autenticado.id);
+            let resultUpdate = await usuarioModel.update(dadosForm, req.session.autenticado.id);
             if (!resultUpdate.isEmpty) {
                 if (resultUpdate.changedRows == 1) {
-                    var result = await usuario.findId(req.session.autenticado.id);
+                    var result = await usuarioModel.findId(req.session.autenticado.id);
                     var autenticado = {
                         autenticado: result[0].nome_usuario,
                         id: result[0].id_usuario,
