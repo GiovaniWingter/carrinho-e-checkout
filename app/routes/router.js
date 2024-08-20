@@ -125,9 +125,9 @@ console.log( req.body.items);
         body: {
             items: req.body.items,
             back_urls: {
-                "success": "http://localhost:8080/feedback",
-                "failure": "http://localhost:8080/feedback",
-                "pending": "http://localhost:8080/feedback"
+                "success": process.env.URL_BASE+"/mpSucess",
+                "failure": process.env.URL_BASE+"/mpFailure",
+                "pending": process.env.URL_BASE+"/mpPending"
             },
             auto_return: "approved",
         }
@@ -144,5 +144,53 @@ console.log( req.body.items);
 /* -----------------------------------------------------------------------*/
 
 
+router.get("/mpSucess", function(req, res){
+  console.log("sucess")
+  console.log(req.query)
+})
+router.get("/mpFailure", function(req, res){
+  console.log("Failure")
+  console.log(req.query)
+})
+router.get("/mpPending", function(req, res){
+  console.log("Pending")
+  console.log(req.query)
+})
 
 module.exports = router;
+
+
+// conprador teste mp
+// TESTUSER1179915949
+// ZSj922o1A0
+
+// 
+//   botão voltar da página de pagamento
+//{
+//   collection_id: 'null',
+//   collection_status: 'null',
+//   payment_id: 'null',
+//   status: 'null',
+//   external_reference: 'null',
+//   payment_type: 'null',
+//   merchant_order_id: 'null',
+//   preference_id: '1919435558-7a2b189a-ae2b-485c-98f9-60540b685a25',
+//   site_id: 'MLB',
+//   processing_mode: 'aggregator',
+//   merchant_account_id: 'null'
+// }
+
+// sucesso no pagamento
+// {
+//   collection_id: '85762850236',
+//   collection_status: 'approved',
+//   payment_id: '85762850236',
+//   status: 'approved',
+//   external_reference: 'null',
+//   payment_type: 'account_money',
+//   merchant_order_id: '21985766174',
+//   preference_id: '1919435558-5169d287-02fa-4a13-ab0c-6b33bbb1dc3b',
+//   site_id: 'MLB',
+//   processing_mode: 'aggregator',
+//   merchant_account_id: 'null'
+// }
