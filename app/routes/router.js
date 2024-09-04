@@ -60,6 +60,11 @@ router.get("/", verificarUsuAutenticado, function (req, res) {
   hqController.listar(req, res);
 });
 
+router.get("/favoritar", verificarUsuAutenticado, function (req, res) {
+  hqController.favoritar(req, res);
+}
+);
+
 router.get("/sair", limparSessao, function (req, res) {
   res.redirect("/");
 });
@@ -102,10 +107,6 @@ router.get(
   }
 );
 
-router.get("/favoritar", verificarUsuAutenticado, function (req, res) {
-  hqController.favoritar(req, res);
-}
-);
 
 
 /* --------------------------------------------------------------------- */
