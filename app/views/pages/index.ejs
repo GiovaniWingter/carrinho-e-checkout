@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,7 +12,6 @@
     <link rel="stylesheet" href="css/estilo.css">
     
 </head>
-
 <body>
     <header>
        <div>
@@ -32,8 +30,8 @@
        }else if(autenticado.img_perfil_banco != null){ 
             arquivo.imagem = autenticado.img_perfil_banco;
        } 
-   %>
-   <span>Olá <%= autenticado.autenticado %>!</span><br>
+    %>
+    <span>Olá <%= autenticado.autenticado %>!</span><br>
     <span><a href="/perfil"><img class="icone-perfil" src="<%= arquivo.imagem %>" </a></span>
     <p><a href="/sair">sair</a></p>
     
@@ -59,31 +57,32 @@
         </figure>
     </a>
     </div>
-
     </header>   
     <section class='galeria'>
         <%
-            if(listaHq){
-                listaHq.forEach(function(item){
+        if(listaHq){
+            listaHq.forEach(function(item){
         %>
-                    <div class="card">
-                        <figure>
-                            <img src="<%= item.imagem_hq %>" alt="">
-                        </figure>
-                        <div class="detalhes">
-                            <h3><%= item.nome_hq %></h3>
-                            <p><%= item.descr_hq %></p>
-                            <h2>R$ <%= item.preco_hq.toFixed(2) %></h2>
-                        </div>
-                        <div class="botoes">
-
-                            <a href="/favoritar?id=<%= item.id_hq %>&sit=<%= item.favorito %>"><i class="fas fa-light fa-heart <%= item.favorito %>"></i></a>
-                            <a class="comprar" href="/addItem?id=<%= item.id_hq %>&preco=<%= item.preco_hq.toFixed(2) %>">comprar</a>
+                <div class="card">
+                    <figure>
+                        <img src="<%= item.imagem_hq %>" alt="">
+                    </figure>
+                    <div class="detalhes">
+                        <h3><%= item.nome_hq %></h3>
+                        <p><%= item.descr_hq %></p>
+                        <h2>R$ <%= item.preco_hq.toFixed(2) %></h2>
+                    </div>
+                    <div class="botoes">
+                        <a href="/favoritar?id=<%= item.id_hq %>&sit=<%= item.favorito %>">
+                            <i class="fas fa-light fa-heart <%= item.favorito %>"></i>
+                        </a>
+                        <a class="comprar" 
+                                href="/addItem?id=<%= item.id_hq %>&preco=<%= item.preco_hq.toFixed(2) %>">comprar</a>
                         </div>
                     </div>
         <%
-                });
-            }
+            });
+        }
         %>
     </section>
 </body>
