@@ -24,9 +24,15 @@ const hqController = {
     },
 
     favoritar: async (req, res) => {
-
         if (req.session.autenticado.autenticado == null) {
-            res.render("pages/login", { listaErros: null, dadosNotificacao: { titulo: "Faça seu Login!", mensagem: "Para favoritar é necessário estar logado !", tipo: "warning" } });
+            res.render("pages/login", { 
+                listaErros: null,
+                 dadosNotificacao: {
+                     titulo: "Faça seu Login!", 
+                     mensagem: "Para favoritar é necessário estar logado !", 
+                     tipo: "warning" 
+                    } 
+                });
         } else {
             await favoritoModel.favoritar({
                 idHq: req.query.id,
@@ -41,3 +47,6 @@ const hqController = {
 
 
 module.exports = { hqController }
+
+
+
