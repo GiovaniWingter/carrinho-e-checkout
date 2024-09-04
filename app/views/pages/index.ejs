@@ -63,12 +63,9 @@
     </header>   
     <section class='galeria'>
         <%
-
             if(listaHq){
                 listaHq.forEach(function(item){
-
-                     
-                    %>
+        %>
                     <div class="card">
                         <figure>
                             <img src="<%= item.imagem_hq %>" alt="">
@@ -84,11 +81,10 @@
                             <a class="comprar" href="/addItem?id=<%= item.id_hq %>&preco=<%= item.preco_hq.toFixed(2) %>">comprar</a>
                         </div>
                     </div>
-                    <%
+        <%
                 });
             }
         %>
     </section>
-
 </body>
-
+</html>
