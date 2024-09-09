@@ -100,7 +100,7 @@
             <% if(autenticado.autenticado){%>
             <button class="btn btn-primary btn-lg btn-block" id="checkout-btn">Comprar</button>
             <% }else {%>
-                <p>Para comprar faça o login</p>
+                <p class="btn btn-warning btn-lg btn-block">Para comprar faça <a href="/login">Login</a></p>
             <% }%>
    </section>
    
@@ -118,9 +118,6 @@
               carrinho.forEach(function(item){ 
                   total += (item.qtde * item.preco);
                   %>
-
- 
-              
               <div class="item">
                 <span class="price" id="summary-price">R$ <%=  item.preco.toFixed(2);  %></span>
                 <p class="item-name"><%= item.produto %>  x<span id="summary-quantity"> <%= item.qtde %></span></p>

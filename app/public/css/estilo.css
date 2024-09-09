@@ -316,6 +316,11 @@ footer p a:hover {
   background-color: #007bff;
   border-color: #007bff;
 }
+.btn-warning {
+  color: #000;
+  background-color: #ffc107;
+  border-color: #ffc107;
+}
 .btn {
   display: inline-block;
   font-weight: 400;
