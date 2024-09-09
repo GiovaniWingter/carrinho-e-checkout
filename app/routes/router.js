@@ -15,15 +15,12 @@ const { hqController } = require("../controllers/hqController");
 const uploadFile = require("../util/uploader")("./app/public/imagem/perfil/");
 // const uploadFile = require("../util/uploader")();
 
-
 // SDK do Mercado Pago
 const { MercadoPagoConfig, Preference } = require('mercadopago');
 // Adicione as credenciais
-const client = new MercadoPagoConfig(
-  {
-    accessToken: process.env.accessToken
-  });
-
+const client = new MercadoPagoConfig({
+  accessToken: process.env.accessToken
+});
 
 router.get("/addItem", function (req, res) {
   carrinhoController.addItem(req, res);
@@ -36,8 +33,6 @@ router.get("/removeItem", function (req, res) {
 router.get("/excluirItem", function (req, res) {
   carrinhoController.excluirItem(req, res);
 });
-
-
 
 router.get("/listar-carrinho", function (req, res) {
   carrinhoController.listarcarrinho(req, res);
@@ -61,15 +56,13 @@ router.post(
   }
 );
 
-
 router.get("/", verificarUsuAutenticado, function (req, res) {
   hqController.listar(req, res);
 });
 
 router.get("/favoritar", verificarUsuAutenticado, function (req, res) {
   hqController.favoritar(req, res);
-}
-);
+});
 
 router.get("/sair", limparSessao, function (req, res) {
   res.redirect("/");
@@ -113,10 +106,7 @@ router.get(
   }
 );
 
-
-
 /* --------------------------------------------------------------------- */
-
 
 router.get("/exemplo", function (req, res) {
   res.render("pages/exemplo")
@@ -143,18 +133,13 @@ router.post("/create-preference", function (req, res) {
       res.json(value)
     })
     .catch(console.log)
-
-
-
 });
 
 /* -----------------------------------------------------------------------*/
 
 
 router.get("/feedback", function (req, res) {
-
   carrinhoController.gravarPedido(req, res);
-
 })
 
 
