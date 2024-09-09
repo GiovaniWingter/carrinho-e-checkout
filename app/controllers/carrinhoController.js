@@ -43,6 +43,22 @@ const carrinhoController = {
             })
         }
     },
+    excluirItem: (req, res) => {
+        try {
+            let id = req.query.id;
+            let qtde = req.query.qtde;
+            carrinho.excluirItem(id);
+            carrinho.atualizarCarrinho(req);
+            let caminho = req.get('Referer').split("/")[3] == "" ? "/" : "/" + req.get('Referer').split("/")[3];
+            res.redirect(caminho);
+        } catch (e) {
+            console.log(e);
+            res.render("pages/login", {
+                listaErros: null,
+                dadosNotificacao: { titulo: "Falha ao logar!", mensagem: "Usuário e/ou senha inválidos!", tipo: "error" }
+            })
+        }
+    },
 
     listarcarrinho: (req, res) => {
         try {

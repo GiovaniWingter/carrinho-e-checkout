@@ -33,6 +33,12 @@ router.get("/removeItem", function (req, res) {
   carrinhoController.removeItem(req, res);
 });
 
+router.get("/excluirItem", function (req, res) {
+  carrinhoController.excluirItem(req, res);
+});
+
+
+
 router.get("/listar-carrinho", function (req, res) {
   carrinhoController.listarcarrinho(req, res);
 });
