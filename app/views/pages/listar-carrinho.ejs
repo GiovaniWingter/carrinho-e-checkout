@@ -97,7 +97,11 @@
                     </tr>
                 </tfoot>
             </table>
+            <% if(autenticado.autenticado){%>
             <button class="btn btn-primary btn-lg btn-block" id="checkout-btn">Comprar</button>
+            <% }else {%>
+                <p>Para comprar faça o login</p>
+            <% }%>
    </section>
    
 

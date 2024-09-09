@@ -113,11 +113,8 @@ router.get("/exemplo", function (req, res) {
 })
 
 router.post("/create-preference", function (req, res) {
-
   const preference = new Preference(client);
-
   console.log(req.body.items);
-
   preference.create({
     body: {
       items: req.body.items,
