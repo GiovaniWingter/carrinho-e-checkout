@@ -1,10 +1,5 @@
 const { carrinho } = require("../util/carrinho");
-const { body, validationResult } = require("express-validator");
 const moment = require("moment");
-
-const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
-const https = require('https');
-
 const { PedidoModel } = require("../models/pedidoModel");
 
 const carrinhoController = {
@@ -43,6 +38,7 @@ const carrinhoController = {
             })
         }
     },
+
     excluirItem: (req, res) => {
         try {
             let id = req.query.id;
@@ -81,7 +77,6 @@ const carrinhoController = {
     },
 
     gravarPedido: async (req, res) => {
-
         try {
             const carrinho = req.session.carrinho;
             const camposJsonPedido = {
@@ -113,6 +108,5 @@ const carrinhoController = {
         }
     }
 }
-
 
 module.exports = { carrinhoController }
