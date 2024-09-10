@@ -25,12 +25,6 @@ const pedidoController = {
             res.redirect("/");
         } catch (e) {
             console.log(e);
-            res.render("pages/listar-carrinho", {
-                autenticado: req.session.autenticado,
-                carrinho: null,
-                listaErros: null,
-                dadosNotificacao: { titulo: "Falha ao Listar Itens !", mensagem: "Erro interno no servidor!", tipo: "error" }
-            })
         }
     }
     
