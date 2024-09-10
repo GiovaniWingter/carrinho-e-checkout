@@ -106,12 +106,6 @@ router.get(
   }
 );
 
-/* --------------------------------------------------------------------- */
-
-router.get("/exemplo", function (req, res) {
-  res.render("pages/exemplo")
-})
-
 router.post("/create-preference", function (req, res) {
   const preference = new Preference(client);
   console.log(req.body.items);
@@ -132,48 +126,9 @@ router.post("/create-preference", function (req, res) {
     .catch(console.log)
 });
 
-/* -----------------------------------------------------------------------*/
-
-
 router.get("/feedback", function (req, res) {
   carrinhoController.gravarPedido(req, res);
-})
+});
 
 
 module.exports = router;
-
-
-// conprador teste mp
-// TESTUSER1179915949
-// ZSj922o1A0
-
-// 
-//   botão voltar da página de pagamento
-//{
-//   collection_id: 'null',
-//   collection_status: 'null',
-//   payment_id: 'null',
-//   status: 'null',
-//   external_reference: 'null',
-//   payment_type: 'null',
-//   merchant_order_id: 'null',
-//   preference_id: '1919435558-7a2b189a-ae2b-485c-98f9-60540b685a25',
-//   site_id: 'MLB',
-//   processing_mode: 'aggregator',
-//   merchant_account_id: 'null'
-// }
-
-// sucesso no pagamento
-// {
-//   collection_id: '85762850236',
-//   collection_status: 'approved',
-//   payment_id: '85762850236',
-//   status: 'approved',
-//   external_reference: 'null',
-//   payment_type: 'account_money',
-//   merchant_order_id: '21985766174',
-//   preference_id: '1919435558-5169d287-02fa-4a13-ab0c-6b33bbb1dc3b',
-//   site_id: 'MLB',
-//   processing_mode: 'aggregator',
-//   merchant_account_id: 'null'
-// }
