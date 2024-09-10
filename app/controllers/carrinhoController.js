@@ -8,19 +8,19 @@ const carrinhoController = {
             let preco = req.query.preco;
             carrinho.addItem(id, 1, preco);
             carrinho.atualizarCarrinho(req);
-            let caminho = 
-                req.get('Referer').split("/")[3] == "" 
-                    ? "/" 
+            let caminho =
+                req.get('Referer').split("/")[3] == ""
+                    ? "/"
                     : "/" + req.get('Referer').split("/")[3];
             res.redirect(caminho);
         } catch (e) {
             console.log(e);
-            res.render("pages/cadastro", {
+            res.render("pages/index", {
                 listaErros: erros, dadosNotificacao: {
-                    titulo: "Erro ao cadastrar!", 
-                    mensagem: "Verifique os valores digitados!", 
+                    titulo: "Erro ao adicionar o item!",
+                    mensagem: "Tente novamente mais tarde!",
                     tipo: "error"
-                }, valores: req.body
+                }
             })
         }
     },
@@ -31,17 +31,18 @@ const carrinhoController = {
             let qtde = req.query.qtde;
             carrinho.removeItem(id, qtde);
             carrinho.atualizarCarrinho(req);
-            let caminho = req.get('Referer').split("/")[3] == "" 
-                ? "/" 
+            let caminho = req.get('Referer').split("/")[3] == ""
+                ? "/"
                 : "/" + req.get('Referer').split("/")[3];
             res.redirect(caminho);
         } catch (e) {
             console.log(e);
-            res.render("pages/login", {
-                listaErros: null,
-                dadosNotificacao: { titulo: "Falha ao logar!", 
-                    mensagem: "Usuário e/ou senha inválidos!", 
-                    tipo: "error" }
+            res.render("pages/index", {
+                listaErros: erros, dadosNotificacao: {
+                    titulo: "Erro ao remover o item!",
+                    mensagem: "Tente novamente mais tarde!",
+                    tipo: "error"
+                }
             })
         }
     },
@@ -52,17 +53,18 @@ const carrinhoController = {
             let qtde = req.query.qtde;
             carrinho.excluirItem(id);
             carrinho.atualizarCarrinho(req);
-            let caminho = req.get('Referer').split("/")[3] == "" 
-                ? "/" 
+            let caminho = req.get('Referer').split("/")[3] == ""
+                ? "/"
                 : "/" + req.get('Referer').split("/")[3];
             res.redirect(caminho);
         } catch (e) {
             console.log(e);
-            res.render("pages/login", {
-                listaErros: null,
-                dadosNotificacao: { titulo: "Falha ao logar!", 
-                    mensagem: "Usuário e/ou senha inválidos!", 
-                    tipo: "error" }
+            res.render("pages/index", {
+                listaErros: erros, dadosNotificacao: {
+                    titulo: "Erro ao excluir o item!",
+                    mensagem: "Tente novamente mais tarde!",
+                    tipo: "error"
+                }
             })
         }
     },
@@ -82,14 +84,14 @@ const carrinhoController = {
                 autenticado: req.session.autenticado,
                 carrinho: null,
                 listaErros: null,
-                dadosNotificacao: { titulo: "Falha ao Listar Itens !", 
-                    mensagem: "Erro interno no servidor!", 
-                    tipo: "error" }
+                dadosNotificacao: {
+                    titulo: "Falha ao Listar Itens !",
+                    mensagem: "Tente novamente mais tarde!",
+                    tipo: "error"
+                }
             })
         }
     },
-
-   
 }
 
 module.exports = { carrinhoController }
