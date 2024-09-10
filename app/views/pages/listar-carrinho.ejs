@@ -63,23 +63,29 @@
                                 <td>  <%= item.produto %>    </td>
                                 <td>  <img class="thumb-cart" src="<%= item.imagem %>" alt=""> </td>
                                 <td>
-                                    <a href="/addItem?id=<%= item.codproduto %>&preco=<%= item.preco %>"><img
-                                            class="icon-cart" src="imagem/add.png" alt=""></a><span class="qtde-cart">
-                                        <%= item.qtde %>
-                                    </span><a href="/removeItem?id=<%= item.codproduto %>&qtde=1"><img class="icon-cart"
-                                            src="imagem/remov.png" alt=""></a>
+                                    <a href="/addItem?id=<%= item.codproduto %>&preco=<%= item.preco %>">
+                                        <img class="icon-cart" src="imagem/add.png" alt="">
+                                    </a>
+                                    <span class="qtde-cart"> <%= item.qtde %> </span>
+                                    <a href="/removeItem?id=<%= item.codproduto %>&qtde=1">
+                                        <img class="icon-cart" src="imagem/remov.png" alt="">
+                                    </a>
                                 </td>
                                 <td> R$ <%= item.preco.toFixed(2) %> </td>
-                                <td><a href="/excluirItem?id=<%= item.codproduto %>"><img src="imagem/excluir.png"
-                                            alt=""></a></td>
+                                <td>
+                                    <a href="/excluirItem?id=<%= item.codproduto %>">
+                                        <img src="imagem/excluir.png" alt="">
+                                    </a>
+                                </td>
                             </tr>
                             <tr>
                                 <td colspan="2">Sub total</td>
                                 <td colspan="4">R$ <%= (item.qtde * item.preco).toFixed(2); %> </td>
                             </tr>
 
-                        <% });
-                     } %>
+                        <% 
+                        });
+                        %>
                     </tbody>
                     <tfoot>
                         <tr>
@@ -90,6 +96,9 @@
                         </tr>
                     </tfoot>
                 </table>
+            <%
+            }
+            %>
                 <% if(autenticado.autenticado){%>
                     <button class="btn btn-primary btn-lg btn-block" id="checkout-btn">Comprar</button>
                 <% }else {%>
