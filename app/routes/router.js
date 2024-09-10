@@ -17,6 +17,7 @@ const uploadFile = require("../util/uploader")("./app/public/imagem/perfil/");
 
 // SDK do Mercado Pago
 const { MercadoPagoConfig, Preference } = require('mercadopago');
+const { pedidoController } = require("../controllers/pedidoController");
 // Adicione as credenciais
 const client = new MercadoPagoConfig({
   accessToken: process.env.accessToken
@@ -127,7 +128,7 @@ router.post("/create-preference", function (req, res) {
 });
 
 router.get("/feedback", function (req, res) {
-  carrinhoController.gravarPedido(req, res);
+  pedidoController.gravarPedido(req, res);
 });
 
 

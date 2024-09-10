@@ -1,4 +1,3 @@
-
 document.addEventListener("DOMContentLoaded", function (e) {
    
   const mercadopago = new MercadoPago('APP_USR-241135b5-df1a-48b8-bfe3-985304c1e399', {
@@ -23,10 +22,8 @@ document.addEventListener("DOMContentLoaded", function (e) {
       const description = nameElement.childNodes[0].nodeValue.trim();
       const quantity = Number(nameElement.querySelector("#summary-quantity").innerText.trim());
       const currency_id = "BRL";
-
       extractedData.push({ unit_price, description, quantity, currency_id });
     });
-
 
     orderData = { items: extractedData }
 
