@@ -10,13 +10,13 @@ document.addEventListener("DOMContentLoaded", function (e) {
     $('#checkout-btn').attr("disabled", true);
 
     const items = document.querySelectorAll(".products .item");
-
     // Array para armazenar os dados extraídos
     const extractedData = [];
 
     // Itera sobre cada item para extrair os dados
     items.forEach(item => {
-      const price = parseFloat(item.querySelector("#summary-price").innerText.trim().replace('R$', '').trim());
+      const price = parseFloat(
+        item.querySelector("#summary-price").innerText.trim().replace('R$', '').trim());
       const unit_price = Number(price.toFixed(2));
       const nameElement = item.querySelector(".item-name");
       const description = nameElement.childNodes[0].nodeValue.trim();
